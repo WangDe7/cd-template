@@ -37,7 +37,7 @@ jobs:
       matrix:
         os: [ linux, darwin, windows ]
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v2
 
       - name: Setup
         uses: actions/setup-go@v2
@@ -62,7 +62,7 @@ jobs:
           mv ${GOOS}_${GOARCH}.tar.gz artifact
 
       - name: Upload
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         env:
           CGO_ENABLED: 0
           GOOS: ${{ matrix.os }}
@@ -82,7 +82,7 @@ jobs:
         run: mkdir -p public/${{ needs.tag.outputs.tag }}
 
       - name: download binary
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: ${{ needs.tag.outputs.tag }}
           path: public/${{ needs.tag.outputs.tag }}
