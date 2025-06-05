@@ -6,8 +6,8 @@ import (
 	"github.com/aws/jsii-runtime-go"
 	"github.com/cdk8s-team/cdk8s-core-go/cdk8s/v2"
 
-	"github.com/mss-boot-io/cd-template/chart"
-	"github.com/mss-boot-io/cd-template/pkg/config"
+	"github.com/WangDe7/cd-template/chart"
+	"github.com/WangDe7/cd-template/pkg/config"
 )
 
 // Synth chart generate
