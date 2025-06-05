@@ -1,4 +1,4 @@
-module github.com/mss-boot-io/cd-template
+module github.com/WangDe7/cd-template
 
 go 1.20
 
