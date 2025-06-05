@@ -11,8 +11,8 @@ import (
 	"flag"
 	"log"
 
-	"github.com/mss-boot-io/cd-template/pkg/config"
-	"github.com/mss-boot-io/cd-template/stage"
+	"github.com/WangDe7/cd-template/pkg/config"
+	"github.com/WangDe7/cd-template/stage"
 )
 
 var configPath = flag.String("config", "", "config path")
