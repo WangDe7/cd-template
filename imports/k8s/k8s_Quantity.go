@@ -2,8 +2,8 @@
 package k8s
 
 import (
+	_init_ "github.com/WangDe7/cd-template/imports/k8s/jsii"
 	_jsii_ "github.com/aws/jsii-runtime-go/runtime"
-	_init_ "github.com/mss-boot-io/cd-template/imports/k8s/jsii"
 )
 
 type Quantity interface {

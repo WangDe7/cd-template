@@ -2,10 +2,10 @@
 package k8s
 
 import (
-	_init_ "github.com/mss-boot-io/cd-template/imports/k8s/jsii"
+	_init_ "github.com/WangDe7/cd-template/imports/k8s/jsii"
 	_jsii_ "github.com/aws/jsii-runtime-go/runtime"
 
-	"github.com/mss-boot-io/cd-template/imports/k8s/internal"
+	"github.com/WangDe7/cd-template/imports/k8s/internal"
 	"github.com/aws/constructs-go/constructs/v10"
 	"github.com/cdk8s-team/cdk8s-core-go/cdk8s/v2"
 )
@@ -299,4 +299,3 @@ func (k *jsiiProxy_KubeStatefulSet) ToString() *string {
 
 	return returns
 }
-

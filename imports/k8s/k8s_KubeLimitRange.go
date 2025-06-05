@@ -2,12 +2,12 @@
 package k8s
 
 import (
+	_init_ "github.com/WangDe7/cd-template/imports/k8s/jsii"
 	_jsii_ "github.com/aws/jsii-runtime-go/runtime"
-	_init_ "github.com/mss-boot-io/cd-template/imports/k8s/jsii"
 
+	"github.com/WangDe7/cd-template/imports/k8s/internal"
 	"github.com/aws/constructs-go/constructs/v10"
 	"github.com/cdk8s-team/cdk8s-core-go/cdk8s/v2"
-	"github.com/mss-boot-io/cd-template/imports/k8s/internal"
 )
 
 // LimitRange sets resource usage limits for each kind of resource in a Namespace.
