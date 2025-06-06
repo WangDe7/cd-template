@@ -8,6 +8,7 @@
 package chart
 
 import (
+	"fmt"
 	"os"
 	"strconv"
 
@@ -309,6 +310,10 @@ func NewWorkloadChart(scope constructs.Construct, id string, props *cdk8s.ChartP
 		if config.Cfg.CronJob.SuccessfulJobsHistoryLimit > 1 {
 			successfulJobsHistoryLimit = config.Cfg.CronJob.SuccessfulJobsHistoryLimit
 		}
+		fmt.Println("*********************************************************")
+		fmt.Println(config.Cfg.CronJob.RestartPolicy)
+		fmt.Println(config.Cfg.CronJob.FailedJobsHistoryLimit)
+		fmt.Println(config.Cfg.CronJob.SuccessfulJobsHistoryLimit)
 		k8s.NewKubeCronJob(chart, jsii.String("cronjob"), &k8s.KubeCronJobProps{
 			Metadata: &k8s.ObjectMeta{
 				Name:   &config.Cfg.Service,
