@@ -311,6 +311,7 @@ func NewWorkloadChart(scope constructs.Construct, id string, props *cdk8s.ChartP
 			successfulJobsHistoryLimit = config.Cfg.CronJob.SuccessfulJobsHistoryLimit
 		}
 		fmt.Println("*********************************************************")
+		fmt.Println(config.Cfg.CronJob.Schedule)
 		fmt.Println(config.Cfg.CronJob.RestartPolicy)
 		fmt.Println(config.Cfg.CronJob.FailedJobsHistoryLimit)
 		fmt.Println(config.Cfg.CronJob.SuccessfulJobsHistoryLimit)
