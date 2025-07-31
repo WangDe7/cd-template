@@ -162,8 +162,12 @@ func NewWorkloadChart(scope constructs.Construct, id string, props *cdk8s.ChartP
 				},
 			})
 		} else {
+			accessMode := config.Cfg.Storages[i].AccessModes
+			if accessMode == "" {
+				accessMode = "ReadWriteOnce"
+			}
 			accessModes := []*string{
-				jsii.String("ReadWriteOnce"),
+				jsii.String(accessMode),
 			}
 			volumeClaimTemplates = append(volumeClaimTemplates, &k8s.KubePersistentVolumeClaimProps{
 				Metadata: &k8s.ObjectMeta{

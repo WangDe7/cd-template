@@ -11,6 +11,10 @@ import (
 
 func NewPvcChart(scope constructs.Construct, id string, props *cdk8s.ChartProps, storage config.Storage) cdk8s.Chart {
 	chart := cdk8s.NewChart(scope, jsii.String(id), props)
+	accessModes := storage.AccessModes
+	if accessModes == "" {
+		accessModes = "ReadWriteOnce"
+	}
 	pvcProps := &k8s.KubePersistentVolumeClaimProps{
 		Metadata: &k8s.ObjectMeta{
 			Labels: props.Labels,
@@ -18,7 +22,7 @@ func NewPvcChart(scope constructs.Construct, id string, props *cdk8s.ChartProps,
 		},
 		Spec: &k8s.PersistentVolumeClaimSpec{
 			AccessModes: &[]*string{
-				jsii.String("ReadWriteOnce"),
+				jsii.String(accessModes),
 			},
 			Resources: &k8s.ResourceRequirements{
 				Requests: &map[string]k8s.Quantity{

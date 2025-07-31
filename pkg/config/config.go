@@ -51,6 +51,7 @@ type Storage struct {
 	SubPath      string `json:"subPath" yaml:"subPath"`
 	Size         string `json:"size" yaml:"size"`
 	StorageClass string `json:"storageClass" yaml:"storageClass"`
+	AccessModes  string `json:"accessModes" yaml:"accessModes"`
 }
 
 func (c *Config) GetName() string {
