@@ -169,7 +169,7 @@ func NewWorkloadChart(scope constructs.Construct, id string, props *cdk8s.ChartP
 			accessModes := []*string{
 				jsii.String(accessMode),
 			}
-			volumeClaimTemplates = append(volumeClaimTemplates, &k8s.KubePersistentVolumeClaimProps{
+			pvcProps := k8s.KubePersistentVolumeClaimProps{
 				Metadata: &k8s.ObjectMeta{
 					Name: &config.Cfg.Storages[i].Name,
 				},
@@ -180,10 +180,13 @@ func NewWorkloadChart(scope constructs.Construct, id string, props *cdk8s.ChartP
 							"storage": k8s.Quantity_FromString(&config.Cfg.Storages[i].Size),
 						},
 					},
-					StorageClassName: &config.Cfg.Storages[i].StorageClass,
-					VolumeMode:       jsii.String("Filesystem"),
+					VolumeMode: jsii.String("Filesystem"),
 				},
-			})
+			}
+			if config.Cfg.Storages[i].StorageClass != "" {
+				pvcProps.Spec.StorageClassName = &config.Cfg.Storages[i].StorageClass
+			}
+			volumeClaimTemplates = append(volumeClaimTemplates, &pvcProps)
 		}
 	}
 
