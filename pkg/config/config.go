@@ -43,6 +43,7 @@ type Config struct {
 	Args               []*string           `json:"args" yaml:"args"`
 	Containers         []Container         `json:"containers" yaml:"containers"`
 	NodeSelector       map[string]*string  `json:"nodeSelector" yaml:"nodeSelector"`
+	AddContainers      []AddContainer      `json:"addContainers" yaml:"addContainers"`
 }
 
 type Storage struct {
@@ -138,6 +139,14 @@ type CronJob struct {
 	RestartPolicy              string  `json:"restartPolicy" yaml:"restartPolicy"`
 	Schedule                   string  `json:"schedule" yaml:"schedule"`
 	SuccessfulJobsHistoryLimit float64 `json:"successfulJobsHistoryLimit" yaml:"successfulJobsHistoryLimit"`
+}
+
+type AddContainer struct {
+	Name      string              `json:"name" yaml:"name"`
+	Command   []*string           `json:"command" yaml:"command"`
+	Args      []*string           `json:"args" yaml:"args"`
+	Ports     []Port              `json:"ports" yaml:"ports"`
+	Resources map[string]Resource `json:"resources" yaml:"resources"`
 }
 
 var (

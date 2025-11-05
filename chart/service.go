@@ -28,6 +28,20 @@ func NewServiceChart(scope constructs.Construct, id string, props *cdk8s.ChartPr
 		}
 	}
 
+	if len(config.Cfg.AddContainers) > 0 {
+		for _, container := range config.Cfg.AddContainers {
+			if len(container.Ports) > 0 {
+				for _, port := range container.Ports {
+					ports = append(ports, &k8s.ServicePort{
+						Name:       &port.Name,
+						Port:       jsii.Number(float64(port.Port)),
+						TargetPort: k8s.IntOrString_FromNumber(jsii.Number(float64(port.TargetPort))),
+					})
+				}
+			}
+		}
+	}
+
 	k8s.NewKubeService(chart, jsii.String("service"), &k8s.KubeServiceProps{
 		Metadata: &k8s.ObjectMeta{
 			Name:   &config.Cfg.Service,

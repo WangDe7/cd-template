@@ -252,6 +252,60 @@ func NewWorkloadChart(scope constructs.Construct, id string, props *cdk8s.ChartP
 		Resources:    &resources,
 	})
 
+	if len(config.Cfg.AddContainers) > 0 {
+		for _, container := range config.Cfg.AddContainers {
+			// set resource
+			var addResources k8s.ResourceRequirements
+			if len(container.Resources) > 0 {
+				for k, r := range container.Resources {
+					switch k {
+					case "limits":
+						addResources.Limits = &map[string]k8s.Quantity{
+							"cpu":    k8s.Quantity_FromString(&r.CPU),
+							"memory": k8s.Quantity_FromString(&r.Memory),
+						}
+					case "requests":
+						addResources.Requests = &map[string]k8s.Quantity{
+							"cpu":    k8s.Quantity_FromString(&r.CPU),
+							"memory": k8s.Quantity_FromString(&r.Memory),
+						}
+					}
+				}
+			} else {
+				addResources = resources
+			}
+			// set command and args
+			var addCommand *[]*string
+			if len(container.Command) > 0 {
+				addCommand = &container.Command
+			}
+			var addArgs *[]*string
+			if len(container.Args) > 0 {
+				addArgs = &container.Args
+			}
+			// set ports
+			addPorts := make([]*k8s.ContainerPort, 0)
+			if len(container.Ports) > 0 {
+				for i := range container.Ports {
+					addPorts = append(addPorts, &k8s.ContainerPort{
+						ContainerPort: jsii.Number(float64(container.Ports[i].Port)),
+					})
+				}
+			}
+
+			containers = append(containers, &k8s.Container{
+				Name:      jsii.String(container.Name),
+				Image:     jsii.String(config.Cfg.Image.String()),
+				Env:       &env,
+				Command:   addCommand,
+				Args:      addArgs,
+				Ports:     &addPorts,
+				Resources: &addResources,
+			})
+
+		}
+	}
+
 	switch config.Cfg.WorkloadType {
 	case "statefulset":
 		k8s.NewKubeStatefulSet(chart, jsii.String("statefulset"), &k8s.KubeStatefulSetProps{
