@@ -294,13 +294,14 @@ func NewWorkloadChart(scope constructs.Construct, id string, props *cdk8s.ChartP
 			}
 
 			containers = append(containers, &k8s.Container{
-				Name:      jsii.String(container.Name),
-				Image:     jsii.String(config.Cfg.Image.String()),
-				Env:       &env,
-				Command:   &addCommand,
-				Args:      addArgs,
-				Ports:     &addPorts,
-				Resources: &addResources,
+				Name:         jsii.String(container.Name),
+				Image:        jsii.String(config.Cfg.Image.String()),
+				Env:          &env,
+				VolumeMounts: &volumeMounts,
+				Command:      &addCommand,
+				Args:         addArgs,
+				Ports:        &addPorts,
+				Resources:    &addResources,
 			})
 
 		}
