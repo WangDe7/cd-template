@@ -275,9 +275,9 @@ func NewWorkloadChart(scope constructs.Construct, id string, props *cdk8s.ChartP
 				addResources = resources
 			}
 			// set command and args
-			var addCommand *[]*string
+			var addCommand []*string
 			if len(container.Command) > 0 {
-				addCommand = &container.Command
+				addCommand = container.Command
 			}
 			var addArgs *[]*string
 			if len(container.Args) > 0 {
@@ -297,7 +297,7 @@ func NewWorkloadChart(scope constructs.Construct, id string, props *cdk8s.ChartP
 				Name:      jsii.String(container.Name),
 				Image:     jsii.String(config.Cfg.Image.String()),
 				Env:       &env,
-				Command:   addCommand,
+				Command:   &addCommand,
 				Args:      addArgs,
 				Ports:     &addPorts,
 				Resources: &addResources,
