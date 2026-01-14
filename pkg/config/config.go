@@ -36,7 +36,9 @@ type Config struct {
 	Metrics            Metrics             `json:"metrics" yaml:"metrics"`
 	ImportEnvNames     []string            `json:"importEnvNames" yaml:"importEnvNames"`
 	Config             []ConfigmapData     `json:"config" yaml:"config"`
+	ConfigmapResource  ConfigmapResource   `json:"configmapResource" yaml:"configmapResource"`
 	Secret             []SecretData        `json:"secret" yaml:"secret"`
+	SecretResource     SecretResource      `json:"secretResource" yaml:"secretResource"`
 	Storages           []Storage           `json:"storages" yaml:"storages"`
 	WorkloadType       string              `json:"workloadType" yaml:"workloadType"`
 	Command            []*string           `json:"command" yaml:"command"`
@@ -121,11 +123,33 @@ type ConfigmapData struct {
 	Data    map[string]string `json:"data" yaml:"data"`
 }
 
+type ConfigmapResource struct {
+	Name         string            `json:"name" yaml:"name"`
+	ConfigData   map[string]string `json:"configData" yaml:"configData"`
+	StageConfigs []StageConfig     `json:"stageConfigs" yaml:"stageConfigs"`
+}
+
+type StageConfig struct {
+	Stage      string            `json:"stage" yaml:"stage"`
+	ConfigData map[string]string `json:"configData" yaml:"configData"`
+}
+
 type SecretData struct {
 	Name    string `json:"name" yaml:"name"`
 	Path    string `json:"path" yaml:"path"`
 	EnvName string `json:"envName" yaml:"envName"`
 	Key     string `json:"key" yaml:"key"`
+}
+
+type SecretResource struct {
+	Name         string            `json:"name" yaml:"name"`
+	SecretData   map[string]string `json:"secretData" yaml:"secretData"`
+	StageSecrets []StageSecret     `json:"stageSecrets" yaml:"stageSecrets"`
+}
+
+type StageSecret struct {
+	Stage      string            `json:"stage" yaml:"stage"`
+	SecretData map[string]string `json:"secretData" yaml:"secretData"`
 }
 
 type Hpa struct {

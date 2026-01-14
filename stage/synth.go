@@ -36,17 +36,30 @@ func Synth(stage string, paths ...string) {
 		chart.NewServiceChart(app, config.Cfg.GetName()+"-service", chartProps)
 	}
 	needConfigmap := false
-	if len(config.Cfg.Config) > 0 {
-		for i := range config.Cfg.Config {
-			if len(config.Cfg.Config[i].Data) > 0 {
-				needConfigmap = true
-			}
-		}
+	if len(config.Cfg.ConfigmapResource.ConfigData) > 0 {
+		needConfigmap = true
 	}
+	//if len(config.Cfg.Config) > 0 {
+	//	for i := range config.Cfg.Config {
+	//		if len(config.Cfg.Config[i].Data) > 0 {
+	//			needConfigmap = true
+	//		}
+	//	}
+	//}
 	if needConfigmap {
 		chart.NewConfigmapChart(app, config.Cfg.GetName()+"-configmap", chartProps)
 	}
+
+	needSecret := false
+	if len(config.Cfg.SecretResource.SecretData) > 0 {
+		needSecret = true
+	}
+	if needSecret {
+		chart.NewSecretChart(app, config.Cfg.GetName()+"-secret", chartProps)
+	}
+
 	chart.NewWorkloadChart(app, config.Cfg.GetName()+"-workload", chartProps)
+
 	if config.Cfg.Hpa.Enabled {
 		chart.NewHpaChart(app, config.Cfg.GetName()+"-hpa", chartProps)
 	}
