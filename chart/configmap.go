@@ -25,15 +25,15 @@ func NewConfigmapChart(scope constructs.Construct, id string, props *cdk8s.Chart
 	chart := cdk8s.NewChart(scope, jsii.String(id), props)
 
 	data := make(map[string]*string)
-	for key, value := range config.Cfg.ConfigmapResource.ConfigData {
-		data[key] = jsii.String(value)
+	for _, configData := range config.Cfg.ConfigmapResource.ConfigData {
+		data[configData.Key] = jsii.String(configData.Value)
 	}
 	stage := os.Getenv("config_stage")
 	if len(config.Cfg.ConfigmapResource.StageConfigs) > 0 {
 		for _, stageConfig := range config.Cfg.ConfigmapResource.StageConfigs {
 			if stageConfig.Stage == stage {
-				for key, value := range stageConfig.ConfigData {
-					data[key] = jsii.String(value)
+				for _, configData := range stageConfig.ConfigData {
+					data[configData.Key] = jsii.String(configData.Value)
 				}
 			}
 		}
@@ -41,6 +41,9 @@ func NewConfigmapChart(scope constructs.Construct, id string, props *cdk8s.Chart
 	if len(data) > 0 {
 		k8s.NewKubeConfigMap(chart, jsii.String("configmap"), &k8s.KubeConfigMapProps{
 			Data: &data,
+			Metadata: &k8s.ObjectMeta{
+				Name: jsii.String(config.Cfg.ConfigmapResource.Name),
+			},
 		})
 	}
 

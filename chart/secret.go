@@ -17,15 +17,15 @@ func NewSecretChart(scope constructs.Construct, id string, props *cdk8s.ChartPro
 	chart := cdk8s.NewChart(scope, jsii.String(id), props)
 
 	data := make(map[string]*string)
-	for key, value := range config.Cfg.SecretResource.SecretData {
-		data[key] = jsii.String(value)
+	for _, secretData := range config.Cfg.SecretResource.SecretData {
+		data[secretData.Key] = jsii.String(secretData.Value)
 	}
 	stage := os.Getenv("config_stage")
 	if len(config.Cfg.SecretResource.StageSecrets) > 0 {
 		for _, stageSecret := range config.Cfg.SecretResource.StageSecrets {
 			if stageSecret.Stage == stage {
-				for key, value := range stageSecret.SecretData {
-					data[key] = jsii.String(value)
+				for _, secretData := range stageSecret.SecretData {
+					data[secretData.Key] = jsii.String(secretData.Value)
 				}
 			}
 		}
@@ -33,6 +33,9 @@ func NewSecretChart(scope constructs.Construct, id string, props *cdk8s.ChartPro
 	if len(data) > 0 {
 		k8s.NewKubeSecret(chart, jsii.String("secret"), &k8s.KubeSecretProps{
 			Data: &data,
+			Metadata: &k8s.ObjectMeta{
+				Name: jsii.String(config.Cfg.SecretResource.Name),
+			},
 		})
 	}
 

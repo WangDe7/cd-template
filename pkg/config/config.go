@@ -124,14 +124,19 @@ type ConfigmapData struct {
 }
 
 type ConfigmapResource struct {
-	Name         string            `json:"name" yaml:"name"`
-	ConfigData   map[string]string `json:"configData" yaml:"configData"`
-	StageConfigs []StageConfig     `json:"stageConfigs" yaml:"stageConfigs"`
+	Name         string        `json:"name" yaml:"name"`
+	ConfigData   []Data        `json:"data" yaml:"data"`
+	StageConfigs []StageConfig `json:"stageConfigs" yaml:"stageConfigs"`
 }
 
 type StageConfig struct {
-	Stage      string            `json:"stage" yaml:"stage"`
-	ConfigData map[string]string `json:"configData" yaml:"configData"`
+	Stage      string `json:"stage" yaml:"stage"`
+	ConfigData []Data `json:"data" yaml:"data"`
+}
+
+type Data struct {
+	Key   string `json:"key" yaml:"key"`
+	Value string `json:"value" yaml:"value"`
 }
 
 type SecretData struct {
@@ -142,14 +147,14 @@ type SecretData struct {
 }
 
 type SecretResource struct {
-	Name         string            `json:"name" yaml:"name"`
-	SecretData   map[string]string `json:"secretData" yaml:"secretData"`
-	StageSecrets []StageSecret     `json:"stageSecrets" yaml:"stageSecrets"`
+	Name         string        `json:"name" yaml:"name"`
+	SecretData   []Data        `json:"data" yaml:"data"`
+	StageSecrets []StageSecret `json:"stageSecrets" yaml:"stageSecrets"`
 }
 
 type StageSecret struct {
-	Stage      string            `json:"stage" yaml:"stage"`
-	SecretData map[string]string `json:"secretData" yaml:"secretData"`
+	Stage      string `json:"stage" yaml:"stage"`
+	SecretData []Data `json:"secretData" yaml:"secretData"`
 }
 
 type Hpa struct {
