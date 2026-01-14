@@ -125,13 +125,13 @@ type ConfigmapData struct {
 
 type ConfigmapResource struct {
 	Name         string        `json:"name" yaml:"name"`
-	ConfigData   []Data        `json:"data" yaml:"data"`
+	ConfigData   []Data        `json:"configData" yaml:"configData"`
 	StageConfigs []StageConfig `json:"stageConfigs" yaml:"stageConfigs"`
 }
 
 type StageConfig struct {
 	Stage      string `json:"stage" yaml:"stage"`
-	ConfigData []Data `json:"data" yaml:"data"`
+	ConfigData []Data `json:"configData" yaml:"configData"`
 }
 
 type Data struct {
@@ -148,7 +148,7 @@ type SecretData struct {
 
 type SecretResource struct {
 	Name         string        `json:"name" yaml:"name"`
-	SecretData   []Data        `json:"data" yaml:"data"`
+	SecretData   []Data        `json:"secretData" yaml:"secretData"`
 	StageSecrets []StageSecret `json:"stageSecrets" yaml:"stageSecrets"`
 }
 
