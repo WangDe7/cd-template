@@ -1,6 +1,7 @@
 package chart
 
 import (
+	"encoding/base64"
 	"github.com/WangDe7/cd-template/imports/k8s"
 	"github.com/WangDe7/cd-template/pkg/config"
 	"github.com/aws/constructs-go/constructs/v10"
@@ -25,7 +26,8 @@ func NewSecretChart(scope constructs.Construct, id string, props *cdk8s.ChartPro
 		for _, stageSecret := range config.Cfg.SecretResource.StageSecrets {
 			if stageSecret.Stage == stage {
 				for _, secretData := range stageSecret.SecretData {
-					data[secretData.Key] = jsii.String(secretData.Value)
+					base64Str := base64Encode(secretData.Value)
+					data[secretData.Key] = jsii.String(base64Str)
 				}
 			}
 		}
@@ -40,4 +42,9 @@ func NewSecretChart(scope constructs.Construct, id string, props *cdk8s.ChartPro
 	}
 
 	return chart
+}
+
+func base64Encode(plainStr string) string {
+	encodeStr := base64.StdEncoding.EncodeToString([]byte(plainStr))
+	return encodeStr
 }
