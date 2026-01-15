@@ -19,7 +19,8 @@ func NewSecretChart(scope constructs.Construct, id string, props *cdk8s.ChartPro
 
 	data := make(map[string]*string)
 	for _, secretData := range config.Cfg.SecretResource.SecretData {
-		data[secretData.Key] = jsii.String(secretData.Value)
+		base64Data := base64Encode(secretData.Value)
+		data[secretData.Key] = jsii.String(base64Data)
 	}
 	stage := os.Getenv("config_stage")
 	if len(config.Cfg.SecretResource.StageSecrets) > 0 {
